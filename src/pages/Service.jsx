@@ -1,38 +1,37 @@
-// import '../App.css'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 export const Service = () => {
 
-
     return (
-        <section className="section-services">
-            <div className="container">
-                <h1>Our Services</h1>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    padding: "20px",
-                    backgroundColor: "#f0f8ff", // Light blue background
-                    border: "2px solid #00aaff", // Border with accent color
-                    borderRadius: "10px", // Rounded corners
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow
-                    color: "#333", // Dark gray text
-                    fontFamily: "'Arial', sans-serif", // Font family
-                    fontSize: "18px", // Font size
-                    margin: "20px auto", // Center the message on the page
-                    maxWidth: "600px", // Limit the width
-                    marginBottom: "150px"
-                }}
-            >
-                <h2>
-                    🚀 Exciting Updates Coming Soon! <br /> Our dedicated team is working hard
-                    to bring you an amazing services section. Stay tuned!
-                </h2>
-            </div>
+        <>
+            <section>
+                <main>
+                    <div className="section-coming-soon">
+                        <div className="container grid grid-two-cols">
+                            <div className="coming-soon-image">
+                                <img
+                                    src="/images/under-construction.png"
+                                    alt="Under Construction"
+                                    width="500"
+                                    height="500"
+                                />
+                            </div>
 
-        </section>
+                            <div className="coming-soon-message">
+                                <h1 className="main-heading mb-3">Service Coming Soon</h1>
+                                <p className="info-text">
+                                    Our team is working hard to bring you this feature. Stay tuned!
+                                </p>
+                                <p className="info-text">
+                                    In the meantime, feel free to explore other services.
+                                </p>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </section>
+        </>
     );
 };

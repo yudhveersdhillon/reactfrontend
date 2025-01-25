@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../store/auth";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 export const Register = () => {
+  // State to manage form inputs
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -10,82 +10,59 @@ export const Register = () => {
     password: "",
   });
 
-  const navigate = useNavigate();
-  const { storeTokenInLS, API } = useAuth();
-
-  const URL = `${API}/api/auth/register`;
-
-  // handling the input values
+  // Handle input change
   const handleInput = (e) => {
-    console.log(e);
-    let name = e.target.name;
-    let value = e.target.value;
-
-    setUser({
-      ...user,
+    const { name, value } = e.target;
+    setUser((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
-  // handling the form submission
-  const handleSubmit = async (e) => {
+  // Handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
-    try {
-      const response = await fetch(URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+    // Here you can send the form data to the server
+    console.log("Form submitted with data:", user);
 
-      const res_data = await response.json();
-      console.log("res from server", res_data.extraDetails);
+    // Reset form after submission
+    setUser({
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+    });
 
-      if (response.ok) {
-        // stored the token in localhost
-        storeTokenInLS(res_data.token);
-        setUser({ username: "", email: "", phone: "", password: "" });
-        toast.success("Registration successful");
-        navigate("/");
-      } else {
-        toast.error(
-          res_data.extraDetails ? res_data.extraDetails : res_data.message
-        );
-      }
-    } catch (error) {
-      console.log("register ", error);
-    }
+    // You can add a success message or navigate to a different page
   };
 
   return (
     <>
-      <section className="register-page">
+      <section>
         <main>
           <div className="section-registration">
             <div className="container grid grid-two-cols">
               <div className="registration-image">
                 <img
-                  src="/images/register.jpg"
+                  src="/images/register.png"
                   alt="a girl is trying to do registration"
                   width="500"
                   height="500"
                 />
               </div>
 
-              {/* let tackle registration form  */}
+              {/* Registration form */}
               <div className="registration-form">
-                <h1 className="">Registration Form</h1>
+                <h1 className="main-heading mb-3">Registration Form</h1>
                 <br />
 
                 <form onSubmit={handleSubmit}>
                   <div>
-                    <label htmlFor="username">username</label>
+                    <label htmlFor="username">Username</label>
                     <input
                       type="text"
                       name="username"
-                      placeholder="username"
+                      placeholder="Username"
                       id="username"
                       required
                       autoComplete="off"
@@ -95,11 +72,11 @@ export const Register = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email">email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                       type="email"
                       name="email"
-                      placeholder="enter your email"
+                      placeholder="Enter your email"
                       id="email"
                       required
                       autoComplete="off"
@@ -107,12 +84,13 @@ export const Register = () => {
                       onChange={handleInput}
                     />
                   </div>
+
                   <div>
-                    <label label htmlFor="phone">phone</label>
+                    <label htmlFor="phone">Phone</label>
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="phone"
+                      placeholder="Phone"
                       id="phone"
                       required
                       autoComplete="off"
@@ -122,11 +100,11 @@ export const Register = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="password">password</label>
+                    <label htmlFor="password">Password</label>
                     <input
                       type="password"
                       name="password"
-                      placeholder="password"
+                      placeholder="Password"
                       id="password"
                       required
                       autoComplete="off"
@@ -136,34 +114,15 @@ export const Register = () => {
                   </div>
 
                   <br />
-                  <button
-                    type="submit"
-                    style={{
-                      marginLeft: "130px",
-                      width: "200px",
-                      display: "inline-block",
-                      padding: "0.75rem 1.5rem",
-                      fontSize: "1rem",
-                      fontWeight: 600,
-                      color: "#fff",
-                      background: "linear-gradient(90deg, #4caf50, #1e90ff)",
-                      border: "none",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      textTransform: "uppercase",
-                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
+                  <button type="submit" className="btn btn-submit">
                     Register Now
                   </button>
-
                 </form>
               </div>
             </div>
           </div>
         </main>
-      </section >
+      </section>
     </>
   );
 };
